@@ -1,1 +1,4 @@
-<resources/>
+<resources>
+  <!-- Add dark mode app background color -->
+  <color name="app_background">#1a3d1a</color>
+</resources>

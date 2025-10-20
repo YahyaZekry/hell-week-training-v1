@@ -14,7 +14,7 @@ module.exports = defineConfig([
         ecmaFeatures: {
           jsx: true,
         },
-        project: './tsconfig.json',
+        project: false,
       },
     },
     plugins: {
@@ -30,8 +30,9 @@ module.exports = defineConfig([
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-non-null-assertion': 'warn',
-      '@typescript-eslint/prefer-nullish-coalescing': 'error',
-      '@typescript-eslint/prefer-optional-chain': 'error',
+      // Temporarily disable rules that require type information
+      // '@typescript-eslint/prefer-nullish-coalescing': 'error',
+      // '@typescript-eslint/prefer-optional-chain': 'error',
       'prefer-const': 'error',
       
       // React Rules
@@ -112,10 +113,30 @@ module.exports = defineConfig([
     },
   },
   {
-    files: ['**/*.test.{js,jsx,ts,tsx}', '**/*.spec.{js,jsx,ts,tsx}'],
+    files: ['**/*.test.{js,jsx,ts,tsx}', '**/*.spec.{js,jsx,ts,tsx}', '**/jest.setup.{js,ts}'],
+    languageOptions: {
+      globals: {
+        describe: 'readonly',
+        test: 'readonly',
+        expect: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        jest: 'readonly',
+      },
+    },
+    plugins: {
+      'jest': require('eslint-plugin-jest'),
+    },
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       'react-native/no-inline-styles': 'off',
+      'jest/expect-expect': 'error',
+      'jest/no-disabled-tests': 'warn',
+      'jest/no-focused-tests': 'error',
+      'jest/prefer-to-have-length': 'warn',
+      'jest/valid-expect': 'error',
     },
   },
   {

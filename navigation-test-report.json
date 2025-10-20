@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-10-17T23:04:36.767Z",
+  "tests": {
+    "routeFiles": true,
+    "navigationStructure": true,
+    "screenCount": true,
+    "navigationFlows": true,
+    "expoDoctor": true
+  },
+  "summary": {
+    "totalTests": 5,
+    "passedTests": 5
+  }
+}
