@@ -5,7 +5,13 @@
  */
 
 import React from 'react';
-import { View, StyleSheet, StatusBar, ImageBackground, Platform } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  StatusBar,
+  ImageBackground,
+  Platform,
+} from 'react-native';
 
 interface SimpleBackgroundProps {
   children?: React.ReactNode;
@@ -17,22 +23,29 @@ export const SimpleBackground: React.FC<SimpleBackgroundProps> = ({
   // Direct Android background fix
   React.useEffect(() => {
     if (Platform.OS === 'android') {
-      // Set status bar
-      StatusBar.setBackgroundColor('#1a3d1a', true);
+      // Set status bar to transparent to show background image
+      StatusBar.setBackgroundColor('transparent', true);
       StatusBar.setBarStyle('light-content', true);
+      StatusBar.setTranslucent(true);
     }
   }, []);
+
+  // Debug: Log when component renders
+  console.warn('SimpleBackground rendering');
 
   return (
     <ImageBackground
       source={require('../../../assets/images/army_camouflage_blue_background.jpg')}
       style={styles.container}
-      imageStyle={styles.backgroundImage}
+      onLoad={() => console.warn('Background image loaded successfully')}
+      onError={error => console.error('Error loading background image:', error)}
     >
-      <StatusBar barStyle="light-content" backgroundColor="#1a3d1a" />
-      <View style={styles.content}>
-        {children}
-      </View>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent={true}
+      />
+      <View style={styles.content}>{children}</View>
     </ImageBackground>
   );
 };
@@ -40,11 +53,6 @@ export const SimpleBackground: React.FC<SimpleBackgroundProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a3d1a', // Direct dark green camouflage - required for Android background
-  },
-  backgroundImage: {
-    resizeMode: 'cover',
-    opacity: 0.9,
   },
   content: {
     flex: 1,

@@ -1,7 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTheme } from '../providers';
@@ -36,83 +42,141 @@ const ProgressScreen: React.FC = () => {
     { day: 'Sun', completed: false },
   ];
 
-  const ProgressCard: React.FC<{ title: string; value: string; subtitle?: string }> = ({ 
-    title, 
-    value, 
-    subtitle 
-  }) => (
-    <View style={[styles.progressCard, { backgroundColor: theme.colors.surface }]}>
-      <Text style={[styles.progressTitle, { color: theme.colors.text.primary }]}>{title}</Text>
-      <Text style={[styles.progressValue, { color: theme.colors.primary[500] }]}>{value}</Text>
+  const ProgressCard: React.FC<{
+    title: string;
+    value: string;
+    subtitle?: string;
+  }> = ({ title, value, subtitle }) => (
+    <View
+      style={[styles.progressCard, { backgroundColor: theme.colors.surface }]}
+    >
+      <Text
+        style={[styles.progressTitle, { color: theme.colors.text.primary }]}
+      >
+        {title}
+      </Text>
+      <Text
+        style={[styles.progressValue, { color: theme.colors.primary[500] }]}
+      >
+        {value}
+      </Text>
       {subtitle && (
-        <Text style={[styles.progressSubtitle, { color: theme.colors.text.secondary }]}>
+        <Text
+          style={[
+            styles.progressSubtitle,
+            { color: theme.colors.text.secondary },
+          ]}
+        >
           {subtitle}
         </Text>
       )}
     </View>
   );
 
-  const AchievementItem: React.FC<{ 
-    title: string; 
-    date: string; 
-    icon: keyof typeof Ionicons.glyphMap 
+  const AchievementItem: React.FC<{
+    title: string;
+    date: string;
+    icon: keyof typeof Ionicons.glyphMap;
   }> = ({ title, date, icon }) => (
-    <View style={[styles.achievementItem, { backgroundColor: theme.colors.surface }]}>
-      <View style={[styles.achievementIcon, { backgroundColor: theme.colors.primary[100] }]}>
+    <View
+      style={[
+        styles.achievementItem,
+        { backgroundColor: theme.colors.surface },
+      ]}
+    >
+      <View
+        style={[
+          styles.achievementIcon,
+          { backgroundColor: theme.colors.primary[100] },
+        ]}
+      >
         <Ionicons name={icon} size={24} color={theme.colors.primary[500]} />
       </View>
       <View style={styles.achievementContent}>
-        <Text style={[styles.achievementTitle, { color: theme.colors.text.primary }]}>{title}</Text>
-        <Text style={[styles.achievementDate, { color: theme.colors.text.secondary }]}>{date}</Text>
+        <Text
+          style={[
+            styles.achievementTitle,
+            { color: theme.colors.text.primary },
+          ]}
+        >
+          {title}
+        </Text>
+        <Text
+          style={[
+            styles.achievementDate,
+            { color: theme.colors.text.secondary },
+          ]}
+        >
+          {date}
+        </Text>
       </View>
     </View>
   );
 
-  const DayIndicator: React.FC<{ day: string; completed: boolean }> = ({ day, completed }) => (
+  const DayIndicator: React.FC<{ day: string; completed: boolean }> = ({
+    day,
+    completed,
+  }) => (
     <View style={styles.dayContainer}>
-      <Text style={[styles.dayText, { color: theme.colors.text.primary }]}>{day}</Text>
-      <View style={[
-        styles.dayIndicator,
-        {
-          backgroundColor: completed ? theme.colors.primary[500] : theme.colors.text.secondary + '30',
-          borderColor: theme.colors.text.secondary
-        }
-      ]} />
+      <Text style={[styles.dayText, { color: theme.colors.text.primary }]}>
+        {day}
+      </Text>
+      <View
+        style={[
+          styles.dayIndicator,
+          {
+            backgroundColor: completed
+              ? theme.colors.primary[500]
+              : theme.colors.text.secondary + '30',
+            borderColor: theme.colors.text.secondary,
+          },
+        ]}
+      />
     </View>
   );
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['top']}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: 'transparent' }]}
+      edges={['top']}
+    >
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.header}>
-          <Text style={[styles.title, { color: theme.colors.text.primary }]}>Your Progress</Text>
-          <Text style={[styles.subtitle, { color: theme.colors.text.secondary }]}>
+          <Text style={[styles.title, { color: theme.colors.text.primary }]}>
+            Your Progress
+          </Text>
+          <Text
+            style={[styles.subtitle, { color: theme.colors.text.secondary }]}
+          >
             Track your fitness journey
           </Text>
         </View>
 
         {/* Stats Overview */}
         <View style={styles.statsContainer}>
-          <ProgressCard 
-            title="Weekly Progress" 
+          <ProgressCard
+            title="Weekly Progress"
             value={`${progressData.weeklyCompleted}/${progressData.weeklyGoal}`}
             subtitle="workouts completed"
           />
-          <ProgressCard 
-            title="Current Streak" 
+          <ProgressCard
+            title="Current Streak"
             value={`${progressData.streak} days`}
             subtitle="keep it up!"
           />
         </View>
 
         <View style={styles.statsContainer}>
-          <ProgressCard 
-            title="Monthly Progress" 
+          <ProgressCard
+            title="Monthly Progress"
             value={`${progressData.monthlyCompleted}/${progressData.monthlyGoal}`}
             subtitle="workouts completed"
           />
-          <ProgressCard 
-            title="Total Workouts" 
+          <ProgressCard
+            title="Total Workouts"
             value={`${progressData.totalWorkouts}`}
             subtitle="all time"
           />
@@ -120,18 +184,35 @@ const ProgressScreen: React.FC = () => {
 
         {/* Weekly Progress */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>This Week</Text>
-          <View style={[styles.weeklyProgress, { backgroundColor: theme.colors.surface }]}>
+          <Text
+            style={[styles.sectionTitle, { color: theme.colors.text.primary }]}
+          >
+            This Week
+          </Text>
+          <View
+            style={[
+              styles.weeklyProgress,
+              { backgroundColor: theme.colors.surface },
+            ]}
+          >
             {weeklyProgress.map((day, index) => (
-              <DayIndicator key={index} day={day.day} completed={day.completed} />
+              <DayIndicator
+                key={index}
+                day={day.day}
+                completed={day.completed}
+              />
             ))}
           </View>
         </View>
 
         {/* Recent Achievements */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>Recent Achievements</Text>
-          {recentAchievements.map((achievement) => (
+          <Text
+            style={[styles.sectionTitle, { color: theme.colors.text.primary }]}
+          >
+            Recent Achievements
+          </Text>
+          {recentAchievements.map(achievement => (
             <AchievementItem
               key={achievement.id}
               title={achievement.title}
@@ -143,9 +224,16 @@ const ProgressScreen: React.FC = () => {
 
         {/* Quick Actions */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>Quick Actions</Text>
+          <Text
+            style={[styles.sectionTitle, { color: theme.colors.text.primary }]}
+          >
+            Quick Actions
+          </Text>
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: theme.colors.primary[500] }]}
+            style={[
+              styles.actionButton,
+              { backgroundColor: theme.colors.primary[500] },
+            ]}
             onPress={() => router.push('/more/workout-history')}
             accessibilityLabel="View detailed workout history"
             accessibilityHint="Navigate to workout history screen"
@@ -153,74 +241,164 @@ const ProgressScreen: React.FC = () => {
             <Ionicons name="bar-chart" size={20} color="#fff" />
             <Text style={styles.actionButtonText}>View Detailed History</Text>
           </TouchableOpacity>
-          
+
           <TouchableOpacity
-            style={[styles.actionButton, styles.actionButtonOutline, { backgroundColor: theme.colors.surface, borderColor: theme.colors.primary[500] }]}
+            style={[
+              styles.actionButton,
+              styles.actionButtonOutline,
+              {
+                backgroundColor: theme.colors.surface,
+                borderColor: theme.colors.primary[500],
+              },
+            ]}
             onPress={() => router.push('/more/analytics')}
             accessibilityLabel="View performance analytics"
             accessibilityHint="Navigate to analytics screen"
           >
-            <Ionicons name="stats-chart" size={20} color={theme.colors.primary[500]} />
-            <Text style={[styles.actionButtonText, { color: theme.colors.primary[500] }]}>Performance Analytics</Text>
+            <Ionicons
+              name="stats-chart"
+              size={20}
+              color={theme.colors.primary[500]}
+            />
+            <Text
+              style={[
+                styles.actionButtonText,
+                { color: theme.colors.primary[500] },
+              ]}
+            >
+              Performance Analytics
+            </Text>
           </TouchableOpacity>
-          
+
           <View style={styles.quickLinksGrid}>
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: theme.colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: theme.colors.surface },
+              ]}
               onPress={() => router.push('/more/analytics')}
             >
-              <Ionicons name="analytics" size={24} color={theme.colors.primary[500]} />
-              <Text style={[styles.quickLinkText, { color: theme.colors.text.primary }]}>
+              <Ionicons
+                name="analytics"
+                size={24}
+                color={theme.colors.primary[500]}
+              />
+              <Text
+                style={[
+                  styles.quickLinkText,
+                  { color: theme.colors.text.primary },
+                ]}
+              >
                 Analytics
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: theme.colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: theme.colors.surface },
+              ]}
               onPress={() => router.push('/more/workout-history')}
             >
-              <Ionicons name="time" size={24} color={theme.colors.primary[500]} />
-              <Text style={[styles.quickLinkText, { color: theme.colors.text.primary }]}>
+              <Ionicons
+                name="time"
+                size={24}
+                color={theme.colors.primary[500]}
+              />
+              <Text
+                style={[
+                  styles.quickLinkText,
+                  { color: theme.colors.text.primary },
+                ]}
+              >
                 History
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: theme.colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: theme.colors.surface },
+              ]}
               onPress={() => router.push('/more/mental')}
             >
-              <Ionicons name="heart" size={24} color={theme.colors.primary[500]} />
-              <Text style={[styles.quickLinkText, { color: theme.colors.text.primary }]}>
+              <Ionicons
+                name="heart"
+                size={24}
+                color={theme.colors.primary[500]}
+              />
+              <Text
+                style={[
+                  styles.quickLinkText,
+                  { color: theme.colors.text.primary },
+                ]}
+              >
                 Mental Fitness
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: theme.colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: theme.colors.surface },
+              ]}
               onPress={() => router.push('/more/recovery')}
             >
-              <Ionicons name="walk" size={24} color={theme.colors.primary[500]} />
-              <Text style={[styles.quickLinkText, { color: theme.colors.text.primary }]}>
+              <Ionicons
+                name="walk"
+                size={24}
+                color={theme.colors.primary[500]}
+              />
+              <Text
+                style={[
+                  styles.quickLinkText,
+                  { color: theme.colors.text.primary },
+                ]}
+              >
                 Recovery
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: theme.colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: theme.colors.surface },
+              ]}
               onPress={() => router.push('/more/exercise-form')}
             >
-              <Ionicons name="play-circle" size={24} color={theme.colors.primary[500]} />
-              <Text style={[styles.quickLinkText, { color: theme.colors.text.primary }]}>
+              <Ionicons
+                name="play-circle"
+                size={24}
+                color={theme.colors.primary[500]}
+              />
+              <Text
+                style={[
+                  styles.quickLinkText,
+                  { color: theme.colors.text.primary },
+                ]}
+              >
                 Exercise Form
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: theme.colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: theme.colors.surface },
+              ]}
               onPress={() => router.push('/more/settings')}
             >
-              <Ionicons name="settings" size={24} color={theme.colors.primary[500]} />
-              <Text style={[styles.quickLinkText, { color: theme.colors.text.primary }]}>
+              <Ionicons
+                name="settings"
+                size={24}
+                color={theme.colors.primary[500]}
+              />
+              <Text
+                style={[
+                  styles.quickLinkText,
+                  { color: theme.colors.text.primary },
+                ]}
+              >
                 Progress Settings
               </Text>
             </TouchableOpacity>

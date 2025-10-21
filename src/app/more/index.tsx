@@ -1,7 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTheme } from '../../providers';
@@ -74,7 +80,11 @@ const MoreScreen: React.FC = () => {
   ];
 
   const categories = [
-    { id: 'performance', title: 'Performance & Analytics', icon: 'stats-chart' },
+    {
+      id: 'performance',
+      title: 'Performance & Analytics',
+      icon: 'stats-chart',
+    },
     { id: 'wellness', title: 'Wellness & Recovery', icon: 'heart' },
     { id: 'settings', title: 'App Settings', icon: 'settings' },
   ];
@@ -87,9 +97,9 @@ const MoreScreen: React.FC = () => {
     router.push(route as any);
   };
 
-  const renderCategory = (category: typeof categories[0]) => {
+  const renderCategory = (category: (typeof categories)[0]) => {
     const categoryItems = getCategoryItems(category.id);
-    
+
     return (
       <View key={category.id} style={styles.categoryContainer}>
         <View style={styles.categoryHeader}>
@@ -98,13 +108,15 @@ const MoreScreen: React.FC = () => {
             size={20}
             color={theme.colors.primary[500]}
           />
-          <Text style={[styles.categoryTitle, { color: theme.colors.text.primary }]}>
+          <Text
+            style={[styles.categoryTitle, { color: theme.colors.text.primary }]}
+          >
             {category.title}
           </Text>
         </View>
-        
+
         <View style={styles.categoryItems}>
-          {categoryItems.map((item) => (
+          {categoryItems.map(item => (
             <TouchableOpacity
               key={item.id}
               style={[
@@ -112,7 +124,7 @@ const MoreScreen: React.FC = () => {
                 {
                   backgroundColor: theme.colors.surface,
                   borderColor: theme.colors.border.light,
-                }
+                },
               ]}
               onPress={() => handleNavigation(item.route)}
               accessible
@@ -120,7 +132,12 @@ const MoreScreen: React.FC = () => {
               accessibilityLabel={`Navigate to ${item.title}`}
               accessibilityHint={item.description}
             >
-              <View style={[styles.iconContainer, { backgroundColor: theme.colors.primary[100] }]}>
+              <View
+                style={[
+                  styles.iconContainer,
+                  { backgroundColor: theme.colors.primary[100] },
+                ]}
+              >
                 <Ionicons
                   name={item.icon}
                   size={24}
@@ -128,10 +145,20 @@ const MoreScreen: React.FC = () => {
                 />
               </View>
               <View style={styles.itemContent}>
-                <Text style={[styles.itemTitle, { color: theme.colors.text.primary }]}>
+                <Text
+                  style={[
+                    styles.itemTitle,
+                    { color: theme.colors.text.primary },
+                  ]}
+                >
                   {item.title}
                 </Text>
-                <Text style={[styles.itemDescription, { color: theme.colors.text.secondary }]}>
+                <Text
+                  style={[
+                    styles.itemDescription,
+                    { color: theme.colors.text.secondary },
+                  ]}
+                >
                   {item.description}
                 </Text>
               </View>
@@ -147,14 +174,25 @@ const MoreScreen: React.FC = () => {
     );
   };
 
+  // Debug: Log when component renders
+  console.warn('MoreScreen rendering with transparent background');
+
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['top']}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: 'transparent' }]}
+      edges={['top']}
+    >
+      <ScrollView
+        style={[styles.scrollView, { backgroundColor: 'transparent' }]}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.header}>
           <Text style={[styles.title, { color: theme.colors.text.primary }]}>
             More Features
           </Text>
-          <Text style={[styles.subtitle, { color: theme.colors.text.secondary }]}>
+          <Text
+            style={[styles.subtitle, { color: theme.colors.text.secondary }]}
+          >
             Explore additional tools and settings
           </Text>
         </View>

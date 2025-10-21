@@ -1,6 +1,12 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView , useColorScheme } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  useColorScheme,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ScreenHeader from '../../components/ScreenHeader';
@@ -22,14 +28,19 @@ const ScheduleScreen: React.FC = () => {
   ];
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: 'transparent' }]}
+    >
       <ScreenHeader
         title="Training Schedule"
         subtitle="Your weekly workout plan"
         onBackPress={() => router.back()}
       />
 
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.scheduleContainer}>
           {weeklySchedule.map((item, index) => (
             <View
@@ -50,7 +61,9 @@ const ScheduleScreen: React.FC = () => {
                   style={[
                     styles.statusIndicator,
                     {
-                      backgroundColor: item.completed ? colors.success : colors.border,
+                      backgroundColor: item.completed
+                        ? colors.success
+                        : colors.border,
                     },
                   ]}
                 />

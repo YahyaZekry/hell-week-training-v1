@@ -8,7 +8,6 @@ import React, { useRef, useState } from 'react';
 import { View, StyleSheet, Animated, Dimensions } from 'react-native';
 
 import { useThemeEvents } from '../../hooks/useThemeEvents';
-import { useTheme } from '../../providers/ThemeProvider';
 
 interface ThemeTransitionProps {
   children: React.ReactNode;
@@ -23,17 +22,16 @@ export const ThemeTransition: React.FC<ThemeTransitionProps> = ({
   duration = 300,
   enabled = true,
 }) => {
-  const { theme } = useTheme();
   const [isTransitioning, setIsTransitioning] = useState(false);
-  
+
   // Animation values
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const slideAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const rotateAnim = useRef(new Animated.Value(0)).current;
-  
+
   const { width: screenWidth } = Dimensions.get('window');
-  
+
   // Listen to theme changes
   useThemeEvents({
     onThemeChange: () => {
@@ -42,19 +40,19 @@ export const ThemeTransition: React.FC<ThemeTransitionProps> = ({
       }
     },
   });
-  
+
   const performTransition = () => {
     setIsTransitioning(true);
-    
+
     // Reset animation values
     fadeAnim.setValue(1);
     slideAnim.setValue(0);
     scaleAnim.setValue(1);
     rotateAnim.setValue(0);
-    
+
     // Create animation sequence based on type
     const animations: Animated.CompositeAnimation[] = [];
-    
+
     switch (animationType) {
       case 'fade':
         animations.push(
@@ -65,7 +63,7 @@ export const ThemeTransition: React.FC<ThemeTransitionProps> = ({
           })
         );
         break;
-        
+
       case 'slide':
         animations.push(
           Animated.timing(slideAnim, {
@@ -75,7 +73,7 @@ export const ThemeTransition: React.FC<ThemeTransitionProps> = ({
           })
         );
         break;
-        
+
       case 'scale':
         animations.push(
           Animated.timing(scaleAnim, {
@@ -85,7 +83,7 @@ export const ThemeTransition: React.FC<ThemeTransitionProps> = ({
           })
         );
         break;
-        
+
       case 'flip':
         animations.push(
           Animated.timing(rotateAnim, {
@@ -96,7 +94,7 @@ export const ThemeTransition: React.FC<ThemeTransitionProps> = ({
         );
         break;
     }
-    
+
     // Execute first half of animation
     Animated.parallel(animations).start(() => {
       // Reset for second half
@@ -114,10 +112,10 @@ export const ThemeTransition: React.FC<ThemeTransitionProps> = ({
           rotateAnim.setValue(1);
           break;
       }
-      
+
       // Execute second half of animation
       const secondAnimations: Animated.CompositeAnimation[] = [];
-      
+
       switch (animationType) {
         case 'fade':
           secondAnimations.push(
@@ -128,7 +126,7 @@ export const ThemeTransition: React.FC<ThemeTransitionProps> = ({
             })
           );
           break;
-          
+
         case 'slide':
           secondAnimations.push(
             Animated.timing(slideAnim, {
@@ -138,7 +136,7 @@ export const ThemeTransition: React.FC<ThemeTransitionProps> = ({
             })
           );
           break;
-          
+
         case 'scale':
           secondAnimations.push(
             Animated.timing(scaleAnim, {
@@ -148,7 +146,7 @@ export const ThemeTransition: React.FC<ThemeTransitionProps> = ({
             })
           );
           break;
-          
+
         case 'flip':
           secondAnimations.push(
             Animated.timing(rotateAnim, {
@@ -159,17 +157,17 @@ export const ThemeTransition: React.FC<ThemeTransitionProps> = ({
           );
           break;
       }
-      
+
       Animated.parallel(secondAnimations).start(() => {
         setIsTransitioning(false);
       });
     });
   };
-  
+
   // Get transform styles based on animation type
   const getTransformStyle = () => {
     const transforms: any[] = [];
-    
+
     switch (animationType) {
       case 'slide':
         transforms.push({ translateX: slideAnim });
@@ -186,35 +184,35 @@ export const ThemeTransition: React.FC<ThemeTransitionProps> = ({
         });
         break;
     }
-    
+
     return transforms;
   };
-  
+
   // Get animated style
   const animatedStyle = {
     opacity: animationType === 'fade' ? fadeAnim : 1,
     transform: getTransformStyle(),
-    backgroundColor: theme.colors.background,
+    backgroundColor: 'transparent',
   };
-  
+
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <View style={[styles.container, { backgroundColor: 'transparent' }]}>
       {/* Transition overlay */}
       {isTransitioning && (
-        <Animated.View 
+        <Animated.View
           style={[
             styles.transitionOverlay,
             {
-              backgroundColor: theme.colors.background,
+              backgroundColor: 'transparent',
               opacity: fadeAnim.interpolate({
                 inputRange: [0, 1],
                 outputRange: [0.8, 0],
               }),
-            }
+            },
           ]}
         />
       )}
-      
+
       {/* Animated content */}
       <Animated.View style={[styles.content, animatedStyle]}>
         {children}

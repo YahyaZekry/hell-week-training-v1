@@ -1,11 +1,21 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity , useColorScheme } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  useColorScheme,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Colors } from '../../constants/Colors';
 
-type TrainingRouteType = '/training/schedule' | '/training/preparation' | '/training/checklists';
+type TrainingRouteType =
+  | '/training/schedule'
+  | '/training/preparation'
+  | '/training/checklists';
 
 const TrainingScreen: React.FC = () => {
   const colorScheme = useColorScheme();
@@ -34,7 +44,9 @@ const TrainingScreen: React.FC = () => {
   ];
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: 'transparent' }]}
+    >
       <View style={styles.header}>
         <Text style={[styles.title, { color: colors.text }]}>Training</Text>
         <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
@@ -42,7 +54,10 @@ const TrainingScreen: React.FC = () => {
         </Text>
       </View>
 
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.modulesContainer}>
           {trainingModules.map((module, index) => (
             <TouchableOpacity
@@ -60,13 +75,18 @@ const TrainingScreen: React.FC = () => {
               <Text style={[styles.moduleTitle, { color: colors.text }]}>
                 {module.title}
               </Text>
-              <Text style={[styles.moduleDescription, { color: colors.textSecondary }]}>
+              <Text
+                style={[
+                  styles.moduleDescription,
+                  { color: colors.textSecondary },
+                ]}
+              >
                 {module.description}
               </Text>
             </TouchableOpacity>
           ))}
         </View>
-        
+
         {/* Quick Links to More Tab Features */}
         <View style={styles.quickLinksSection}>
           <Text style={[styles.sectionTitle, { color: colors.text }]}>
@@ -74,7 +94,10 @@ const TrainingScreen: React.FC = () => {
           </Text>
           <View style={styles.quickLinksGrid}>
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: colors.surface },
+              ]}
               onPress={() => router.push('/more/workout-history')}
             >
               <Text style={styles.quickLinkIcon}>📊</Text>
@@ -82,9 +105,12 @@ const TrainingScreen: React.FC = () => {
                 Workout History
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: colors.surface },
+              ]}
               onPress={() => router.push('/more/exercise-form')}
             >
               <Text style={styles.quickLinkIcon}>🎥</Text>
@@ -92,9 +118,12 @@ const TrainingScreen: React.FC = () => {
                 Exercise Form Guide
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: colors.surface },
+              ]}
               onPress={() => router.push('/more/analytics')}
             >
               <Text style={styles.quickLinkIcon}>📈</Text>
@@ -102,9 +131,12 @@ const TrainingScreen: React.FC = () => {
                 Performance Analytics
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: colors.surface },
+              ]}
               onPress={() => router.push('/more/recovery')}
             >
               <Text style={styles.quickLinkIcon}>💤</Text>
@@ -112,9 +144,12 @@ const TrainingScreen: React.FC = () => {
                 Recovery Techniques
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: colors.surface },
+              ]}
               onPress={() => router.push('/more/mental')}
             >
               <Text style={styles.quickLinkIcon}>🧠</Text>
@@ -122,9 +157,12 @@ const TrainingScreen: React.FC = () => {
                 Mental Fitness
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: colors.surface },
+              ]}
               onPress={() => router.push('/more/settings')}
             >
               <Text style={styles.quickLinkIcon}>⚙️</Text>

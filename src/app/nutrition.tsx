@@ -1,7 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTheme } from '../providers';
@@ -34,15 +40,22 @@ const NutritionScreen: React.FC = () => {
   ];
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: 'transparent' }]}
+    >
       <View style={styles.header}>
-        <Text style={[styles.title, { color: theme.colors.text.primary }]}>Nutrition</Text>
+        <Text style={[styles.title, { color: theme.colors.text.primary }]}>
+          Nutrition
+        </Text>
         <Text style={[styles.subtitle, { color: theme.colors.text.secondary }]}>
           Fuel your body for optimal performance
         </Text>
       </View>
 
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.modulesContainer}>
           {nutritionModules.map((module, index) => (
             <TouchableOpacity
@@ -56,78 +69,162 @@ const NutritionScreen: React.FC = () => {
               ]}
             >
               <Text style={styles.moduleIcon}>{module.icon}</Text>
-              <Text style={[styles.moduleTitle, { color: theme.colors.text.primary }]}>
+              <Text
+                style={[
+                  styles.moduleTitle,
+                  { color: theme.colors.text.primary },
+                ]}
+              >
                 {module.title}
               </Text>
-              <Text style={[styles.moduleDescription, { color: theme.colors.text.secondary }]}>
+              <Text
+                style={[
+                  styles.moduleDescription,
+                  { color: theme.colors.text.secondary },
+                ]}
+              >
                 {module.description}
               </Text>
             </TouchableOpacity>
           ))}
         </View>
-        
+
         {/* Quick Links */}
         <View style={styles.quickLinksSection}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>
+          <Text
+            style={[styles.sectionTitle, { color: theme.colors.text.primary }]}
+          >
             Related Features
           </Text>
           <View style={styles.quickLinksGrid}>
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: theme.colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: theme.colors.surface },
+              ]}
               onPress={() => router.push('/more/analytics')}
             >
-              <Ionicons name="analytics" size={24} color={theme.colors.primary[500]} />
-              <Text style={[styles.quickLinkText, { color: theme.colors.text.primary }]}>
+              <Ionicons
+                name="analytics"
+                size={24}
+                color={theme.colors.primary[500]}
+              />
+              <Text
+                style={[
+                  styles.quickLinkText,
+                  { color: theme.colors.text.primary },
+                ]}
+              >
                 Nutrition Analytics
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: theme.colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: theme.colors.surface },
+              ]}
               onPress={() => router.push('/more/mental')}
             >
-              <Ionicons name="heart" size={24} color={theme.colors.primary[500]} />
-              <Text style={[styles.quickLinkText, { color: theme.colors.text.primary }]}>
+              <Ionicons
+                name="heart"
+                size={24}
+                color={theme.colors.primary[500]}
+              />
+              <Text
+                style={[
+                  styles.quickLinkText,
+                  { color: theme.colors.text.primary },
+                ]}
+              >
                 Mental Wellness
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: theme.colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: theme.colors.surface },
+              ]}
               onPress={() => router.push('/more/recovery')}
             >
-              <Ionicons name="walk" size={24} color={theme.colors.primary[500]} />
-              <Text style={[styles.quickLinkText, { color: theme.colors.text.primary }]}>
+              <Ionicons
+                name="walk"
+                size={24}
+                color={theme.colors.primary[500]}
+              />
+              <Text
+                style={[
+                  styles.quickLinkText,
+                  { color: theme.colors.text.primary },
+                ]}
+              >
                 Recovery Tips
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: theme.colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: theme.colors.surface },
+              ]}
               onPress={() => router.push('/more/settings')}
             >
-              <Ionicons name="settings" size={24} color={theme.colors.primary[500]} />
-              <Text style={[styles.quickLinkText, { color: theme.colors.text.primary }]}>
+              <Ionicons
+                name="settings"
+                size={24}
+                color={theme.colors.primary[500]}
+              />
+              <Text
+                style={[
+                  styles.quickLinkText,
+                  { color: theme.colors.text.primary },
+                ]}
+              >
                 Diet Preferences
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: theme.colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: theme.colors.surface },
+              ]}
               onPress={() => router.push('/more/workout-history')}
             >
-              <Ionicons name="bar-chart" size={24} color={theme.colors.primary[500]} />
-              <Text style={[styles.quickLinkText, { color: theme.colors.text.primary }]}>
+              <Ionicons
+                name="bar-chart"
+                size={24}
+                color={theme.colors.primary[500]}
+              />
+              <Text
+                style={[
+                  styles.quickLinkText,
+                  { color: theme.colors.text.primary },
+                ]}
+              >
                 Nutrition History
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
-              style={[styles.quickLinkCard, { backgroundColor: theme.colors.surface }]}
+              style={[
+                styles.quickLinkCard,
+                { backgroundColor: theme.colors.surface },
+              ]}
               onPress={() => router.push('/more/exercise-form')}
             >
-              <Ionicons name="play-circle" size={24} color={theme.colors.primary[500]} />
-              <Text style={[styles.quickLinkText, { color: theme.colors.text.primary }]}>
+              <Ionicons
+                name="play-circle"
+                size={24}
+                color={theme.colors.primary[500]}
+              />
+              <Text
+                style={[
+                  styles.quickLinkText,
+                  { color: theme.colors.text.primary },
+                ]}
+              >
                 Meal Prep Videos
               </Text>
             </TouchableOpacity>

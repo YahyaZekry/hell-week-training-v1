@@ -5,7 +5,14 @@
  */
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from 'react';
 import { Appearance, useColorScheme } from 'react-native';
 
 import {
@@ -34,7 +41,9 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 const ThemePersistence = {
   getTheme: async (): Promise<ThemeName | null> => {
     try {
-      const storedTheme = await AsyncStorage.getItem(themeConfig.persistenceKey);
+      const storedTheme = await AsyncStorage.getItem(
+        themeConfig.persistenceKey
+      );
       return storedTheme as ThemeName | null;
     } catch (error) {
       console.error('Failed to get theme from storage:', error);
@@ -52,7 +61,9 @@ const ThemePersistence = {
 
   getConsolidatedTheme: async (): Promise<ConsolidatedThemeName | null> => {
     try {
-      const storedTheme = await AsyncStorage.getItem('consolidated-' + themeConfig.persistenceKey);
+      const storedTheme = await AsyncStorage.getItem(
+        'consolidated-' + themeConfig.persistenceKey
+      );
       return storedTheme as ConsolidatedThemeName | null;
     } catch (error) {
       console.error('Failed to get consolidated theme from storage:', error);
@@ -60,9 +71,14 @@ const ThemePersistence = {
     }
   },
 
-  setConsolidatedTheme: async (themeName: ConsolidatedThemeName): Promise<void> => {
+  setConsolidatedTheme: async (
+    themeName: ConsolidatedThemeName
+  ): Promise<void> => {
     try {
-      await AsyncStorage.setItem('consolidated-' + themeConfig.persistenceKey, themeName);
+      await AsyncStorage.setItem(
+        'consolidated-' + themeConfig.persistenceKey,
+        themeName
+      );
     } catch (error) {
       console.error('Failed to save consolidated theme to storage:', error);
     }
@@ -76,7 +92,9 @@ const ThemePersistence = {
   clearTheme: async (): Promise<void> => {
     try {
       await AsyncStorage.removeItem(themeConfig.persistenceKey);
-      await AsyncStorage.removeItem('consolidated-' + themeConfig.persistenceKey);
+      await AsyncStorage.removeItem(
+        'consolidated-' + themeConfig.persistenceKey
+      );
     } catch (error) {
       console.error('Failed to clear theme from storage:', error);
     }
@@ -84,16 +102,15 @@ const ThemePersistence = {
 };
 
 // Theme Provider Component
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({
-  children,
-}) => {
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const systemColorScheme = useColorScheme();
   const [themeName, setThemeNameState] = useState<ThemeName>('dark');
-  const [consolidatedThemeName, setConsolidatedThemeName] = useState<ConsolidatedThemeName>(defaultConsolidatedTheme);
+  const [consolidatedThemeName, setConsolidatedThemeName] =
+    useState<ConsolidatedThemeName>(defaultConsolidatedTheme);
   const [isLoading, setIsLoading] = useState(true);
   const [isSystemTheme, setIsSystemTheme] = useState(false);
   const [useConsolidatedSystem, setUseConsolidatedSystem] = useState(true);
-  
+
   // Background state management
   const [backgroundState, setBackgroundStateState] = useState<BackgroundState>({
     pattern: 'camouflage',
@@ -124,11 +141,11 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     setThemeNameState(newThemeName);
     setIsSystemTheme(false);
     setUseConsolidatedSystem(false);
-    
+
     if (themeConfig.enablePersistence) {
       await ThemePersistence.setTheme(newThemeName);
     }
-    
+
     // Emit theme change event
     themeEvents.emitThemeChange({
       themeName: newThemeName,
@@ -138,54 +155,60 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   }, []);
 
   // Set consolidated theme function
-  const setConsolidatedTheme = useCallback(async (newThemeName: ConsolidatedThemeName) => {
-    setConsolidatedThemeName(newThemeName);
-    setIsSystemTheme(false);
-    setUseConsolidatedSystem(true);
-    
-    if (themeConfig.enablePersistence) {
-      await ThemePersistence.setConsolidatedTheme(newThemeName);
-    }
-    
-    // Emit theme change event
-    themeEvents.emitThemeChange({
-      themeName: undefined,
-      consolidatedThemeName: newThemeName,
-      isDark: systemColorScheme === 'dark',
-    });
-  }, [systemColorScheme]);
+  const setConsolidatedTheme = useCallback(
+    async (newThemeName: ConsolidatedThemeName) => {
+      setConsolidatedThemeName(newThemeName);
+      setIsSystemTheme(false);
+      setUseConsolidatedSystem(true);
+
+      if (themeConfig.enablePersistence) {
+        await ThemePersistence.setConsolidatedTheme(newThemeName);
+      }
+
+      // Emit theme change event
+      themeEvents.emitThemeChange({
+        themeName: undefined,
+        consolidatedThemeName: newThemeName,
+        isDark: systemColorScheme === 'dark',
+      });
+    },
+    [systemColorScheme]
+  );
 
   // Background state management functions
-  const setBackgroundState = useCallback((newState: Partial<BackgroundState>) => {
-    setBackgroundStateState((prev: BackgroundState) => {
-      const updatedState = { ...prev, ...newState };
-      
-      // Emit background change event
-      themeEvents.emitBackgroundChange({
-        backgroundState: updatedState,
+  const setBackgroundState = useCallback(
+    (newState: Partial<BackgroundState>) => {
+      setBackgroundStateState((prev: BackgroundState) => {
+        const updatedState = { ...prev, ...newState };
+
+        // Emit background change event
+        themeEvents.emitBackgroundChange({
+          backgroundState: updatedState,
+        });
+
+        return updatedState;
       });
-      
-      return updatedState;
-    });
-  }, []);
+    },
+    []
+  );
 
   const refreshBackground = useCallback(() => {
     // Force background refresh by updating state
     setBackgroundStateState((prev: BackgroundState) => ({
       ...prev,
-      isVisible: false
+      isVisible: false,
     }));
-    
+
     // Trigger re-render with slight delay for smooth transition
     setTimeout(() => {
       setBackgroundStateState((prev: BackgroundState) => {
         const updatedState = { ...prev, isVisible: true };
-        
+
         // Emit background refresh event
         themeEvents.emitBackgroundChange({
           backgroundState: updatedState,
         });
-        
+
         return updatedState;
       });
     }, 50);
@@ -202,15 +225,15 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
           opacity: isDark ? 0.9 : 0.8,
           isVisible: true,
         };
-        
+
         setBackgroundStateState((prev: BackgroundState) => {
           const updatedState = { ...prev, ...newBackgroundState };
-          
+
           // Emit background change event
           themeEvents.emitBackgroundChange({
             backgroundState: updatedState,
           });
-          
+
           return updatedState;
         });
       }
@@ -223,7 +246,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
       // Toggle between light/dark for consolidated themes
       // This is handled automatically by system detection
       setIsSystemTheme(!isSystemTheme);
-      
+
       // Emit system theme change event
       themeEvents.emitSystemThemeChange({
         isDark: !isDark,
@@ -234,7 +257,6 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     }
   }, [isDark, setTheme, isSystemTheme, useConsolidatedSystem]);
 
-
   // Initialize theme on mount
   useEffect(() => {
     const initializeTheme = async () => {
@@ -243,26 +265,32 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
         setConsolidatedThemeName('navyCamouflage' as ConsolidatedThemeName);
         setUseConsolidatedSystem(true);
         setIsSystemTheme(false); // Don't use system preference
-        
+
         if (themeConfig.enablePersistence) {
           // Try to get stored consolidated theme first
-          const storedConsolidatedTheme = await ThemePersistence.getConsolidatedTheme();
-          
-          if (storedConsolidatedTheme && consolidatedThemes[storedConsolidatedTheme]) {
+          const storedConsolidatedTheme =
+            await ThemePersistence.getConsolidatedTheme();
+
+          if (
+            storedConsolidatedTheme &&
+            consolidatedThemes[storedConsolidatedTheme]
+          ) {
             setConsolidatedThemeName(storedConsolidatedTheme);
             setUseConsolidatedSystem(true);
             setIsSystemTheme(false); // Don't use system preference
           } else {
             // Fallback to legacy theme system
             const storedTheme = await ThemePersistence.getTheme();
-            
+
             if (storedTheme && themes[storedTheme]) {
               setThemeNameState(storedTheme);
               setUseConsolidatedSystem(false);
               setIsSystemTheme(false);
             } else {
               // Default to camouflage theme
-              setConsolidatedThemeName('navyCamouflage' as ConsolidatedThemeName);
+              setConsolidatedThemeName(
+                'navyCamouflage' as ConsolidatedThemeName
+              );
               setUseConsolidatedSystem(true);
               setIsSystemTheme(false);
             }
@@ -286,7 +314,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   useEffect(() => {
     if (themeConfig.enableSystemPreference && isSystemTheme) {
       const subscription = Appearance.addChangeListener(({ colorScheme }) => {
-        const newThemeName: ThemeName = colorScheme === 'dark' ? 'dark' : 'light';
+        const newThemeName: ThemeName =
+          colorScheme === 'dark' ? 'dark' : 'light';
         setThemeNameState(newThemeName);
       });
 
@@ -296,10 +325,15 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 
   // Listen for system color scheme changes
   useEffect(() => {
-    if (themeConfig.enableSystemPreference && isSystemTheme && systemColorScheme) {
-      const newThemeName: ThemeName = systemColorScheme === 'dark' ? 'dark' : 'light';
+    if (
+      themeConfig.enableSystemPreference &&
+      isSystemTheme &&
+      systemColorScheme
+    ) {
+      const newThemeName: ThemeName =
+        systemColorScheme === 'dark' ? 'dark' : 'light';
       setThemeNameState(newThemeName);
-      
+
       // Emit system theme change event
       themeEvents.emitSystemThemeChange({
         themeName: newThemeName,
@@ -309,37 +343,44 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   }, [systemColorScheme, isSystemTheme]);
 
   // Context value
-  const contextValue = useMemo<ThemeContextType>(() => ({
-    theme,
-    themeName,
-    setTheme,
-    toggleTheme,
-    isDark,
-    consolidatedThemeName,
-    setConsolidatedTheme,
-    useConsolidatedSystem,
-    backgroundState,
-    setBackgroundState,
-    refreshBackground,
-  }), [
-    theme,
-    themeName,
-    setTheme,
-    toggleTheme,
-    isDark,
-    consolidatedThemeName,
-    setConsolidatedTheme,
-    useConsolidatedSystem,
-    backgroundState.pattern,
-    backgroundState.colors,
-    backgroundState.opacity,
-    backgroundState.isVisible,
-    refreshBackground
-  ]);
+  const contextValue = useMemo<ThemeContextType>(
+    () => ({
+      theme,
+      themeName,
+      setTheme,
+      toggleTheme,
+      isDark,
+      consolidatedThemeName,
+      setConsolidatedTheme,
+      useConsolidatedSystem,
+      backgroundState,
+      setBackgroundState,
+      refreshBackground,
+    }),
+    [
+      theme,
+      themeName,
+      setTheme,
+      toggleTheme,
+      isDark,
+      consolidatedThemeName,
+      setConsolidatedTheme,
+      useConsolidatedSystem,
+      backgroundState.pattern,
+      backgroundState.colors,
+      backgroundState.opacity,
+      backgroundState.isVisible,
+      refreshBackground,
+    ]
+  );
 
   // Show loading state if initializing
   if (isLoading) {
-    return null; // Or a loading spinner
+    return (
+      <ThemeContext.Provider value={contextValue}>
+        {children}
+      </ThemeContext.Provider>
+    );
   }
 
   return (
@@ -360,11 +401,20 @@ export const useTheme = (): ThemeContextType => {
 
 // Higher-order component for theme access
 export const withTheme = <P extends object>(
-  Component: React.ComponentType<P & { theme: Theme; themeName: ThemeName; isDark: boolean }>
+  Component: React.ComponentType<
+    P & { theme: Theme; themeName: ThemeName; isDark: boolean }
+  >
 ) => {
   const WithThemeComponent = (props: P) => {
     const { theme, themeName, isDark } = useTheme();
-    return <Component {...props} theme={theme} themeName={themeName} isDark={isDark} />;
+    return (
+      <Component
+        {...props}
+        theme={theme}
+        themeName={themeName}
+        isDark={isDark}
+      />
+    );
   };
 
   WithThemeComponent.displayName = `withTheme(${Component.displayName || Component.name})`;
@@ -375,21 +425,21 @@ export const withTheme = <P extends object>(
 export const themeUtils = {
   // Get theme by name
   getThemeByName: getTheme,
-  
+
   // Check if theme is dark
   isThemeDark: isDarkTheme,
-  
+
   // Get theme name from theme object
   getThemeNameFromTheme: getThemeName,
-  
+
   // Get available themes
   getAvailableThemes: () => Object.keys(themes) as ThemeName[],
-  
+
   // Validate theme name
   isValidThemeName: (name: string): name is ThemeName => {
     return name in themes;
   },
-  
+
   // Get theme metadata
   getThemeMetadata: (themeName: ThemeName) => {
     return {
@@ -399,10 +449,10 @@ export const themeUtils = {
       fonts: themes[themeName].typography.fontFamily,
     };
   },
-  
+
   // Clear stored theme
   clearStoredTheme: ThemePersistence.clearTheme,
-  
+
   // Get system theme preference
   getSystemThemePreference: ThemePersistence.getSystemTheme,
 };
@@ -419,7 +469,7 @@ export const themeDebug = {
       textColor: themeContext.theme.colors.text.primary,
     });
   },
-  
+
   // Log all available themes
   logAllThemes: () => {
     console.log('Available Themes:', Object.keys(themes));
@@ -431,17 +481,27 @@ export const themeDebug = {
       });
     });
   },
-  
+
   // Validate theme structure
   validateThemeStructure: (theme: Theme) => {
-    const requiredProperties = ['colors', 'typography', 'spacing', 'shadows', 'borders', 'animations', 'breakpoints'];
-    const missingProperties = requiredProperties.filter(prop => !(prop in theme));
-    
+    const requiredProperties = [
+      'colors',
+      'typography',
+      'spacing',
+      'shadows',
+      'borders',
+      'animations',
+      'breakpoints',
+    ];
+    const missingProperties = requiredProperties.filter(
+      prop => !(prop in theme)
+    );
+
     if (missingProperties.length > 0) {
       console.error('Missing theme properties:', missingProperties);
       return false;
     }
-    
+
     console.log('Theme structure is valid');
     return true;
   },

@@ -8,28 +8,31 @@ import navigationAnimationService from '../../services/navigationAnimationServic
 const TrainingLayout: React.FC = () => {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
-  
+
   // Get animation configurations
-  const trainingStackConfig = navigationAnimationService.getTrainingStackConfig();
-  const preparationToChecklistConfig = navigationAnimationService.getPreparationToChecklistConfig();
+  const trainingStackConfig =
+    navigationAnimationService.getTrainingStackConfig();
+  const preparationToChecklistConfig =
+    navigationAnimationService.getPreparationToChecklistConfig();
 
   return (
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: colors.background,
+          backgroundColor: 'transparent',
         },
         headerTintColor: colors.text,
         headerTitleStyle: {
           fontWeight: '600',
         },
         contentStyle: {
-          backgroundColor: colors.background,
+          backgroundColor: 'transparent',
         },
         // Enhanced animation configuration
         gestureEnabled: true,
         animation: 'slide_from_right',
-        animationDuration: trainingStackConfig.transitionSpec.open.config.duration,
+        animationDuration:
+          trainingStackConfig.transitionSpec.open.config.duration,
       }}
     >
       <Stack.Screen

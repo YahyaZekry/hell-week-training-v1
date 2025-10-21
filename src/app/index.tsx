@@ -1,6 +1,12 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTheme } from '../providers';
@@ -79,10 +85,18 @@ const HomeScreen: React.FC = () => {
   }> = ({ title, value, subtitle, icon }) => (
     <View style={[styles.statCard, { backgroundColor: theme.colors.surface }]}>
       <Text style={styles.statIcon}>{icon}</Text>
-      <Text style={[styles.statTitle, { color: theme.colors.text.secondary }]}>{title}</Text>
-      <Text style={[styles.statValue, { color: theme.colors.text.primary }]}>{value}</Text>
+      <Text style={[styles.statTitle, { color: theme.colors.text.secondary }]}>
+        {title}
+      </Text>
+      <Text style={[styles.statValue, { color: theme.colors.text.primary }]}>
+        {value}
+      </Text>
       {subtitle && (
-        <Text style={[styles.statSubtitle, { color: theme.colors.text.secondary }]}>{subtitle}</Text>
+        <Text
+          style={[styles.statSubtitle, { color: theme.colors.text.secondary }]}
+        >
+          {subtitle}
+        </Text>
       )}
     </View>
   );
@@ -99,7 +113,7 @@ const HomeScreen: React.FC = () => {
         {
           backgroundColor: color + '20',
           borderColor: color,
-        }
+        },
       ]}
       onPress={() => router.push(route as any)}
       accessible
@@ -108,7 +122,11 @@ const HomeScreen: React.FC = () => {
       accessibilityHint={`Navigate to ${title}`}
     >
       <Text style={[styles.quickActionIcon, { color: color }]}>{icon}</Text>
-      <Text style={[styles.quickActionTitle, { color: theme.colors.text.primary }]}>{title}</Text>
+      <Text
+        style={[styles.quickActionTitle, { color: theme.colors.text.primary }]}
+      >
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 
@@ -124,7 +142,7 @@ const HomeScreen: React.FC = () => {
         {
           backgroundColor: theme.colors.surface,
           borderColor: theme.colors.border.light,
-        }
+        },
       ]}
       onPress={() => router.push(route as any)}
       accessible
@@ -132,26 +150,47 @@ const HomeScreen: React.FC = () => {
       accessibilityLabel={title}
       accessibilityHint={`Navigate to ${title}`}
     >
-      <Text style={[styles.secondaryQuickLinkIcon, { color: color }]}>{icon}</Text>
-      <Text style={[styles.secondaryQuickLinkText, { color: theme.colors.text.primary }]}>{title}</Text>
+      <Text style={[styles.secondaryQuickLinkIcon, { color: color }]}>
+        {icon}
+      </Text>
+      <Text
+        style={[
+          styles.secondaryQuickLinkText,
+          { color: theme.colors.text.primary },
+        ]}
+      >
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['top']}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: 'transparent' }]}
+      edges={['top']}
+    >
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.header}>
           <Text style={[styles.title, { color: theme.colors.text.primary }]}>
             Hell Week Training
           </Text>
-          <Text style={[styles.subtitle, { color: theme.colors.text.secondary }]}>
+          <Text
+            style={[styles.subtitle, { color: theme.colors.text.secondary }]}
+          >
             Push Your Limits
           </Text>
         </View>
 
         {/* Today&apos;s Overview */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>Today&apos;s Overview</Text>
+          <Text
+            style={[styles.sectionTitle, { color: theme.colors.text.primary }]}
+          >
+            Today&apos;s Overview
+          </Text>
           <View style={styles.statsGrid}>
             <StatCard
               title="Workouts"
@@ -179,7 +218,11 @@ const HomeScreen: React.FC = () => {
 
         {/* Quick Actions */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>Quick Actions</Text>
+          <Text
+            style={[styles.sectionTitle, { color: theme.colors.text.primary }]}
+          >
+            Quick Actions
+          </Text>
           <View style={styles.quickActionsGrid}>
             {quickActions.map((action, index) => (
               <QuickActionCard
@@ -195,14 +238,27 @@ const HomeScreen: React.FC = () => {
 
         {/* Motivational Quote */}
         <View style={styles.section}>
-          <View style={[
-            styles.quoteCard,
-            { backgroundColor: theme.colors.surface, borderColor: theme.colors.primary[500] }
-          ]}>
-            <Text style={[styles.quoteText, { color: theme.colors.text.primary }]}>
-              &quot;The only bad workout is the one that didn&apos;t happen.&quot;
+          <View
+            style={[
+              styles.quoteCard,
+              {
+                backgroundColor: theme.colors.surface,
+                borderColor: theme.colors.primary[500],
+              },
+            ]}
+          >
+            <Text
+              style={[styles.quoteText, { color: theme.colors.text.primary }]}
+            >
+              &quot;The only bad workout is the one that didn&apos;t
+              happen.&quot;
             </Text>
-            <Text style={[styles.quoteAuthor, { color: theme.colors.text.secondary }]}>
+            <Text
+              style={[
+                styles.quoteAuthor,
+                { color: theme.colors.text.secondary },
+              ]}
+            >
               - Unknown
             </Text>
           </View>
@@ -210,18 +266,39 @@ const HomeScreen: React.FC = () => {
 
         {/* Recent Activity */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>Recent Activity</Text>
-          <View style={[
-            styles.activityCard,
-            { backgroundColor: theme.colors.surface }
-          ]}>
-            <Text style={[styles.activityTitle, { color: theme.colors.text.primary }]}>
+          <Text
+            style={[styles.sectionTitle, { color: theme.colors.text.primary }]}
+          >
+            Recent Activity
+          </Text>
+          <View
+            style={[
+              styles.activityCard,
+              { backgroundColor: theme.colors.surface },
+            ]}
+          >
+            <Text
+              style={[
+                styles.activityTitle,
+                { color: theme.colors.text.primary },
+              ]}
+            >
               Great job on this morning&apos;s workout! 💪
             </Text>
-            <Text style={[styles.activityDescription, { color: theme.colors.text.secondary }]}>
+            <Text
+              style={[
+                styles.activityDescription,
+                { color: theme.colors.text.secondary },
+              ]}
+            >
               Upper body strength training completed in 45 minutes
             </Text>
-            <Text style={[styles.activityTime, { color: theme.colors.text.secondary }]}>
+            <Text
+              style={[
+                styles.activityTime,
+                { color: theme.colors.text.secondary },
+              ]}
+            >
               2 hours ago
             </Text>
           </View>
@@ -229,7 +306,11 @@ const HomeScreen: React.FC = () => {
 
         {/* Secondary Quick Links */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>Explore More</Text>
+          <Text
+            style={[styles.sectionTitle, { color: theme.colors.text.primary }]}
+          >
+            Explore More
+          </Text>
           <View style={styles.secondaryQuickLinksGrid}>
             {secondaryQuickLinks.map((link, index) => (
               <SecondaryQuickLinkCard

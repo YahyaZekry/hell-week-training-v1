@@ -3,12 +3,11 @@ import { Tabs } from 'expo-router';
 import { Platform } from 'react-native';
 
 import { SimpleBackground } from '../components/ui/SimpleBackground';
-import { ThemeTransition } from '../components/ui/ThemeTransition';
 import { ThemeProvider, useTheme } from '../providers';
 
 function TabLayoutContent() {
   const { theme } = useTheme();
-  
+
   return (
     <Tabs
       screenOptions={{
@@ -33,8 +32,11 @@ function TabLayoutContent() {
           fontWeight: '600',
           marginTop: 4,
         },
-      }}>
-      
+        sceneStyle: {
+          backgroundColor: 'transparent',
+        },
+      }}
+    >
       {/* Home Tab */}
       <Tabs.Screen
         name="index"
@@ -46,13 +48,18 @@ function TabLayoutContent() {
               size={24}
               color={color}
               accessibilityRole="image"
-              accessibilityLabel={focused ? 'Home tab, currently active' : 'Home tab'}
+              accessibilityLabel={
+                focused ? 'Home tab, currently active' : 'Home tab'
+              }
               accessibilityHint="Navigate to the home screen with overview and quick actions. Double tap to activate."
             />
           ),
+          sceneStyle: {
+            backgroundColor: 'transparent',
+          },
         }}
       />
-      
+
       {/* Training Tab */}
       <Tabs.Screen
         name="training"
@@ -64,13 +71,18 @@ function TabLayoutContent() {
               size={24}
               color={color}
               accessibilityRole="image"
-              accessibilityLabel={focused ? 'Training tab, currently active' : 'Training tab'}
+              accessibilityLabel={
+                focused ? 'Training tab, currently active' : 'Training tab'
+              }
               accessibilityHint="Navigate to training programs and workouts. Double tap to activate."
             />
           ),
+          sceneStyle: {
+            backgroundColor: 'transparent',
+          },
         }}
       />
-      
+
       {/* Progress Tab */}
       <Tabs.Screen
         name="progress"
@@ -82,13 +94,18 @@ function TabLayoutContent() {
               size={24}
               color={color}
               accessibilityRole="image"
-              accessibilityLabel={focused ? 'Progress tab, currently active' : 'Progress tab'}
+              accessibilityLabel={
+                focused ? 'Progress tab, currently active' : 'Progress tab'
+              }
               accessibilityHint="Navigate to track your fitness progress and achievements. Double tap to activate."
             />
           ),
+          sceneStyle: {
+            backgroundColor: 'transparent',
+          },
         }}
       />
-      
+
       {/* Nutrition Tab */}
       <Tabs.Screen
         name="nutrition"
@@ -100,13 +117,18 @@ function TabLayoutContent() {
               size={24}
               color={color}
               accessibilityRole="image"
-              accessibilityLabel={focused ? 'Nutrition tab, currently active' : 'Nutrition tab'}
+              accessibilityLabel={
+                focused ? 'Nutrition tab, currently active' : 'Nutrition tab'
+              }
               accessibilityHint="Navigate to meal planning and nutrition tracking. Double tap to activate."
             />
           ),
+          sceneStyle: {
+            backgroundColor: 'transparent',
+          },
         }}
       />
-      
+
       {/* More Tab */}
       <Tabs.Screen
         name="more"
@@ -118,13 +140,18 @@ function TabLayoutContent() {
               size={24}
               color={color}
               accessibilityRole="image"
-              accessibilityLabel={focused ? 'More tab, currently active' : 'More tab'}
+              accessibilityLabel={
+                focused ? 'More tab, currently active' : 'More tab'
+              }
               accessibilityHint="Navigate to additional features including analytics, recovery, and settings. Double tap to activate."
             />
           ),
+          sceneStyle: {
+            backgroundColor: 'transparent',
+          },
         }}
       />
-      </Tabs>
+    </Tabs>
   );
 }
 
@@ -132,9 +159,7 @@ export default function TabLayout() {
   return (
     <ThemeProvider>
       <SimpleBackground>
-        <ThemeTransition>
-          <TabLayoutContent />
-        </ThemeTransition>
+        <TabLayoutContent />
       </SimpleBackground>
     </ThemeProvider>
   );

@@ -1,6 +1,12 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView , useColorScheme } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  useColorScheme,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ScreenHeader from '../../components/ScreenHeader';
@@ -40,14 +46,19 @@ const PreparationScreen: React.FC = () => {
   ];
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: 'transparent' }]}
+    >
       <ScreenHeader
         title="Preparation"
         subtitle="Get ready for your workout"
         onBackPress={() => router.back()}
       />
 
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.preparationContainer}>
           {preparationItems.map((item, index) => (
             <View
@@ -64,7 +75,12 @@ const PreparationScreen: React.FC = () => {
               <Text style={[styles.preparationTitle, { color: colors.text }]}>
                 {item.title}
               </Text>
-              <Text style={[styles.preparationDescription, { color: colors.textSecondary }]}>
+              <Text
+                style={[
+                  styles.preparationDescription,
+                  { color: colors.textSecondary },
+                ]}
+              >
                 {item.description}
               </Text>
             </View>

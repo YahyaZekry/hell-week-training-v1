@@ -1,6 +1,13 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity , useColorScheme } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  useColorScheme,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ScreenHeader from '../../components/ScreenHeader';
@@ -29,14 +36,19 @@ const ChecklistsScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: 'transparent' }]}
+    >
       <ScreenHeader
         title="Checklists"
         subtitle="Track your training progress"
         onBackPress={() => router.back()}
       />
 
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.checklistContainer}>
           {checklistItems.map(item => (
             <TouchableOpacity
@@ -54,14 +66,14 @@ const ChecklistsScreen: React.FC = () => {
                 style={[
                   styles.checkbox,
                   {
-                    backgroundColor: item.completed ? colors.success : 'transparent' as const,
+                    backgroundColor: item.completed
+                      ? colors.success
+                      : ('transparent' as const),
                     borderColor: colors.border,
                   },
                 ]}
               >
-                {item.completed && (
-                  <Text style={styles.checkmark}>✓</Text>
-                )}
+                {item.completed && <Text style={styles.checkmark}>✓</Text>}
               </View>
               <Text
                 style={[

@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity, Switch } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Switch,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ThemedText, ThemedCard } from '../../components/ui';
@@ -177,11 +183,19 @@ const SettingsScreen: React.FC = () => {
           <View style={styles.settingLeft}>
             <ThemedText style={styles.settingIcon}>{item.icon}</ThemedText>
             <View style={styles.settingContent}>
-              <ThemedText variant="body" weight="semibold" style={styles.settingTitle}>
+              <ThemedText
+                variant="body"
+                weight="semibold"
+                style={styles.settingTitle}
+              >
                 {item.title}
               </ThemedText>
               {item.description && (
-                <ThemedText variant="caption" color="secondary" style={styles.settingDescription}>
+                <ThemedText
+                  variant="caption"
+                  color="secondary"
+                  style={styles.settingDescription}
+                >
                   {item.description}
                 </ThemedText>
               )}
@@ -189,7 +203,7 @@ const SettingsScreen: React.FC = () => {
           </View>
           <Switch
             value={item.value}
-            onValueChange={(value) => {
+            onValueChange={value => {
               switch (item.id) {
                 case 'notifications':
                   setNotifications(value);
@@ -204,7 +218,7 @@ const SettingsScreen: React.FC = () => {
             }}
             trackColor={{
               false: theme.colors.border.light,
-              true: theme.colors.primary[300]
+              true: theme.colors.primary[300],
             }}
             thumbColor={theme.colors.text.primary}
             ios_backgroundColor={theme.colors.border.light}
@@ -224,18 +238,33 @@ const SettingsScreen: React.FC = () => {
           <View style={styles.settingLeft}>
             <ThemedText style={styles.settingIcon}>{item.icon}</ThemedText>
             <View style={styles.settingContent}>
-              <ThemedText variant="body" weight="semibold" style={styles.settingTitle}>
+              <ThemedText
+                variant="body"
+                weight="semibold"
+                style={styles.settingTitle}
+              >
                 {item.title}
               </ThemedText>
               {item.description && (
-                <ThemedText variant="caption" color="secondary" style={styles.settingDescription}>
+                <ThemedText
+                  variant="caption"
+                  color="secondary"
+                  style={styles.settingDescription}
+                >
                   {item.description}
                 </ThemedText>
               )}
             </View>
           </View>
           {/* eslint-disable-next-line react-native/no-raw-text */}
-          <ThemedText style={[styles.settingArrow, { color: theme.colors.text.secondary }] as any}>
+          <ThemedText
+            style={
+              [
+                styles.settingArrow,
+                { color: theme.colors.text.secondary },
+              ] as any
+            }
+          >
             ›
           </ThemedText>
         </ThemedCard>
@@ -352,11 +381,19 @@ const SettingsScreen: React.FC = () => {
   });
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['top']}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: 'transparent' }]}
+      edges={['top']}
+    >
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.header}>
           {/* eslint-disable-next-line react-native/no-raw-text */}
-          <ThemedText variant="heading1" style={styles.title}>Settings</ThemedText>
+          <ThemedText variant="heading1" style={styles.title}>
+            Settings
+          </ThemedText>
           {/* eslint-disable-next-line react-native/no-raw-text */}
           <ThemedText variant="body" color="secondary" style={styles.subtitle}>
             Customize your app experience
@@ -370,31 +407,41 @@ const SettingsScreen: React.FC = () => {
             Appearance
           </ThemedText>
           <View style={styles.sectionItems}>
-            <TouchableOpacity onPress={() => setUseEnhancedSelector(!useEnhancedSelector)} activeOpacity={0.7}>
+            <TouchableOpacity
+              onPress={() => setUseEnhancedSelector(!useEnhancedSelector)}
+              activeOpacity={0.7}
+            >
               <ThemedCard style={styles.themeToggleCard}>
                 <View style={styles.themeToggleContent}>
                   <View style={styles.themeToggleLeft}>
                     {/* eslint-disable-next-line react-native/no-raw-text */}
-                    <ThemedText style={styles.themeToggleIcon}>
-                      🎨
-                    </ThemedText>
+                    <ThemedText style={styles.themeToggleIcon}>🎨</ThemedText>
                     <View style={styles.themeToggleText}>
                       {/* eslint-disable-next-line react-native/no-raw-text */}
                       <ThemedText variant="body" weight="semibold">
                         Enhanced Theme Selector
                       </ThemedText>
                       <ThemedText variant="caption" color="secondary">
-                        {useEnhancedSelector ? 'Using new theme selector with patterns' : 'Using classic theme selector'}
+                        {useEnhancedSelector
+                          ? 'Using new theme selector with patterns'
+                          : 'Using classic theme selector'}
                       </ThemedText>
                     </View>
                   </View>
-                  <ThemedText style={[styles.expandIcon, { color: theme.colors.text.secondary }] as any}>
+                  <ThemedText
+                    style={
+                      [
+                        styles.expandIcon,
+                        { color: theme.colors.text.secondary },
+                      ] as any
+                    }
+                  >
                     {useEnhancedSelector ? '−' : '+'}
                   </ThemedText>
                 </View>
               </ThemedCard>
             </TouchableOpacity>
-            
+
             <ThemedCard style={styles.themeToggleCard}>
               <View style={styles.themeToggleContent}>
                 <View style={styles.themeToggleLeft}>
@@ -408,21 +455,20 @@ const SettingsScreen: React.FC = () => {
                     <ThemedText variant="caption" color="secondary">
                       {useConsolidatedSystem
                         ? `Automatically switches based on device settings (${isDark ? 'Dark' : 'Light'})`
-                        : `Currently using ${consolidatedThemeName} theme`
-                      }
+                        : `Currently using ${consolidatedThemeName} theme`}
                     </ThemedText>
                   </View>
                 </View>
                 <Switch
                   value={useConsolidatedSystem}
-                  onValueChange={(value) => {
+                  onValueChange={value => {
                     if (value && setConsolidatedTheme) {
                       setConsolidatedTheme(consolidatedThemeName);
                     }
                   }}
                   trackColor={{
                     false: theme.colors.border.light,
-                    true: theme.colors.primary[300]
+                    true: theme.colors.primary[300],
                   }}
                   thumbColor={theme.colors.text.primary}
                   ios_backgroundColor={theme.colors.border.light}
@@ -453,7 +499,7 @@ const SettingsScreen: React.FC = () => {
               {section.title}
             </ThemedText>
             <View style={styles.sectionItems}>
-              {section.items.map((item) => (
+              {section.items.map(item => (
                 <SettingItem key={item.id} item={item} />
               ))}
             </View>
@@ -463,15 +509,27 @@ const SettingsScreen: React.FC = () => {
         {/* App Info */}
         <View style={styles.footer}>
           {/* eslint-disable-next-line react-native/no-raw-text */}
-          <ThemedText variant="caption" color="secondary" style={styles.footerText}>
+          <ThemedText
+            variant="caption"
+            color="secondary"
+            style={styles.footerText}
+          >
             Hell Week Training App
           </ThemedText>
           {/* eslint-disable-next-line react-native/no-raw-text */}
-          <ThemedText variant="caption" color="secondary" style={styles.footerText}>
+          <ThemedText
+            variant="caption"
+            color="secondary"
+            style={styles.footerText}
+          >
             Version 1.0.0
           </ThemedText>
           {/* eslint-disable-next-line react-native/no-raw-text */}
-          <ThemedText variant="caption" color="secondary" style={styles.footerText}>
+          <ThemedText
+            variant="caption"
+            color="secondary"
+            style={styles.footerText}
+          >
             © 2024 All rights reserved
           </ThemedText>
         </View>
